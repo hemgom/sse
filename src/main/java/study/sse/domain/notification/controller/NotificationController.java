@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import study.sse.domain.notification.enums.SubscribeType;
 import study.sse.domain.notification.service.NotificationService;
 
 @Slf4j
@@ -21,9 +22,9 @@ public class NotificationController {
 
 	private final NotificationService notificationService;
 
-	@GetMapping(value = "/subscribe/{memberId}/v1", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	@GetMapping(value = "/subscribe/activity/{memberId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public SseEmitter subscribe(@PathVariable(name = "memberId") Long memberId) {
-		return notificationService.subscribe(memberId);
+		return notificationService.subscribe(memberId, SubscribeType.ACTIVITY);
 	}
 }
